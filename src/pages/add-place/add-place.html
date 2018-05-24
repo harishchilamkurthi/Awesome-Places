@@ -9,7 +9,7 @@
 
 
 <ion-content padding>
-  <form action="">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-list>
       <ion-item>
         <ion-label fixed>Title</ion-label>
@@ -82,6 +82,15 @@
       <ion-row>
         <ion-col>
           <img src="" alt="" [src]="">
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <button
+          ion-button
+          color="secondary"
+          block
+          type="submit">Add this Place</button>
         </ion-col>
       </ion-row>
     </ion-grid>
