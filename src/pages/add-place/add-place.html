@@ -55,6 +55,35 @@
         </button>
         </ion-col>
       </ion-row>
+      <ion-row>
+        <ion-col>
+          <p>Selected Place</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col text-center>
+          <h5>Click</h5>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <button
+          ion-button
+          icon-left
+          block
+          ouline
+          type="button"
+          (click)="onTakePhot()">
+          <ion-icon name="camera"></ion-icon>
+          Camera
+        </button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <img src="" alt="" [src]="">
+        </ion-col>
+      </ion-row>
     </ion-grid>
   </form>
 </ion-content>
