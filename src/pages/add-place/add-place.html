@@ -90,7 +90,10 @@
           ion-button
           color="secondary"
           block
-          type="submit">Add this Place</button>
+          type="submit"
+          [disabled]="!f.valid">
+          Add this Place
+        </button>
         </ion-col>
       </ion-row>
     </ion-grid>
