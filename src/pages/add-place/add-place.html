@@ -28,5 +28,21 @@
           required></ion-textarea>
       </ion-item>
     </ion-list>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <button
+            ion-button
+            block
+            outline
+            type="button"
+            icon-left
+            (click)="onLocate()">
+           <ion-icon name="locate"></ion-icon> 
+           Locate
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </form>
 </ion-content>
