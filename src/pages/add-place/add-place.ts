@@ -10,5 +10,7 @@ export class AddPlacePage {
   onSubmit(form:NgForm){
     console.log(form.value);
   }
-  
+  onOpenMap(){
+    
+  }
 }
