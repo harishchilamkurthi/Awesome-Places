@@ -24,5 +24,12 @@ export class AddPlacePage {
   onOpenMap(){
     const modal = this.modalCtrl.create(SetLocationPage, {location: this.location});
     modal.present();
+    modal.onDidDismiss(
+      data => {
+        if(data){
+          this.location = data.location;
+        }
+      }
+    )
   }
 }
