@@ -99,7 +99,7 @@
           color="secondary"
           block
           type="submit"
-          [disabled]="!f.valid">
+          [disabled]="!f.valid || !locationIsSet">
           Add this Place
         </button>
         </ion-col>
