@@ -15,6 +15,7 @@ export class AddPlacePage {
     lat: 40.7624324,
     // lng: -73.9759827
   };
+  locationIsSet = false;
 
   constructor(private modalCtrl: ModalController){}
 
@@ -28,6 +29,7 @@ export class AddPlacePage {
       data => {
         if(data){
           this.location = data.location;
+          this.locationIsSet = true;
         }
       }
     )
