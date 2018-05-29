@@ -38,8 +38,18 @@ export class AddPlacePage {
   
   onLocate(){
     Geolocation.getCurrentPosition()
-      .then()
-      .catch();
+      .then(
+        location => {
+          this.location.lat = location.coords.latitude;
+          this.location.lng = location.coords.longitude;
+          this.locationIsSet = true;
+        }
+      )
+      .catch(
+        error => { 
+          console.log(error);
+         }
+      );
   }
 
 }
