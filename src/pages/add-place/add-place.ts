@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ModalController } from "ionic-angular";
+import { ModalController, LoadingController, ToastController } from "ionic-angular";
 import { Geolocation } from '@ionic-native/geolocation';
 
 import { SetLocationPage } from '../set-location/set-location';
@@ -16,9 +16,13 @@ export class AddPlacePage {
     lat: 40.7624324,
     lng: -73.9759827
   };
-  locationIsSet = false;
+  locationIsSet = true;
 
-  constructor(private modalCtrl: ModalController, private geolocation: Geolocation){}
+  constructor(private modalCtrl: ModalController, 
+              private geolocation: Geolocation,
+              private loadingCtrl: LoadingController,
+              private toastCtrl: ToastController
+  ){}
 
   onSubmit(form:NgForm){
     console.log(form.value);
@@ -36,20 +40,30 @@ export class AddPlacePage {
     );
   }
   
-  onLocate(){
+  onLocate() {
+    const loader = this.loadingCtrl.create({
+      content: 'Getting your location...'
+    });
+    loader.present();
     this.geolocation.getCurrentPosition()
       .then(
         location => {
+          loader.dismiss();
           this.location.lat = location.coords.latitude;
           this.location.lng = location.coords.longitude;
           this.locationIsSet = true;
+ 
         }
       )
       .catch(
-        error => { 
-          console.log(error);
-         }
+        error => {
+          loader.dismiss();
+          const toast = this.toastCtrl.create({
+            message: 'not in there!',
+            duration: 2500
+          });
+          toast.present();
+        }
       );
   }
-
 }
