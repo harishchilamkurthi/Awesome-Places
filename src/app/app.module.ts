@@ -5,6 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Camera } from '@ionic-native/camera';
 import { Geolocation } from '@ionic-native/geolocation';
+// import { File } from '@ionic-native/file';
+// import { Entry } from '@ionic-native/entry';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -42,6 +44,8 @@ import { PlacesService } from '../services/places';
     SplashScreen,
     Geolocation, 
     Camera,
+    // File,
+    // Entry,
     // CameraOptions,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     PlacesService

@@ -4,12 +4,18 @@ import { ModalController, LoadingController, ToastController } from "ionic-angul
 import { Geolocation } from '@ionic-native/geolocation';
 import { Camera } from '@ionic-native/camera';
 // import { Camera, CameraOptions } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+import { FileError } from '@ionic-native/fileerror';
+import { Entry } from '@ionic-native/entry';
+
 
 import { SetLocationPage } from '../set-location/set-location';
 import { Location } from "../../models/location";
 import { PlacesService } from '../../services/places';
+// import { Cordova } from '@ionic-native/core';
 
-// @IonicPage()
+//cordova variable will be identified at runtime
+declare var cordova: any;
 @Component({
   selector: 'page-add-place',
   templateUrl: 'add-place.html',
@@ -27,7 +33,8 @@ export class AddPlacePage {
               private loadingCtrl: LoadingController,
               private toastCtrl: ToastController,
               private camera: Camera,
-              private placesService: PlacesService
+              private placesService: PlacesService,
+              private file: File
   ){}
 
   onSubmit(form:NgForm){
@@ -42,7 +49,7 @@ export class AddPlacePage {
         lat: 40.7624324,
         lng: -73.9759827
       };
-      
+
       this.imageUrl = '';
       this.locationIsSet = false;
   }
@@ -102,21 +109,49 @@ export class AddPlacePage {
     })
       .then(
         (imageData:any) => {
+          //to extract filename||to replace a part of the path
+          const currentName = imageData.replace(/^.*[\\\/]/, '');
           // imageData is either a base64 encoded string or a file URI
           // If it's base64:
         //   let base64Image = 'data:image/jpeg;base64,' + imageData;
         //  }, (err) => {
         //   // Handle error
         //  });
+        //to extract the path
+        const path = imageData.replace(/[^\/]*$/, '');
+        //cordova has helper classes/directories 
+        File.moveFile(path, currentName, cordova.file.dataDirectory, currentName)
+        //cordova.file.dataDirectory helper expression gives access to the folder for this app on different platform(ios/android) where the files can be stored permanently.
+        .then(
+          (data: Entry) => {
+            this.imageUrl = data.nativeURL;
+            // Camera.cleanup();
+            File.removeFile(path, currentName);
+          }
+        )
+        .catch(
+          (err: FileError) => {
+            this.imageUrl = '';
+            const toast = this.toastCtrl.create({
+              message: 'Couldnt save the image. Please try again',
+              duration: 2500
+            });
+            toast.present();
+            // Camera.cleanup();//cleans up the temp storage
+            File.removeFile(path, currentName);
+          }
+        )
         this.imageUrl = imageData;
         }
       )
       .catch(
         err => {
-          console.log(err);
+          const toast = this.toastCtrl.create({
+            message: 'Couldnt take the image. Please try again',
+            duration: 2500
+          });
+          toast.present();
         }
       );
- 
- 
   }
 }
