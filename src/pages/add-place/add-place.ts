@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalController, LoadingController, ToastController } from "ionic-angular";
 import { Geolocation } from '@ionic-native/geolocation';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
+// import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { SetLocationPage } from '../set-location/set-location';
 import { Location } from "../../models/location";
@@ -18,6 +19,7 @@ export class AddPlacePage {
     lng: -73.9759827
   };
   locationIsSet = true;
+  imageUrl='';
 
   constructor(private modalCtrl: ModalController, 
               private geolocation: Geolocation,
@@ -61,7 +63,7 @@ export class AddPlacePage {
         error => {
           loader.dismiss();
           const toast = this.toastCtrl.create({
-            message: 'not in there!',
+            message: 'Couldnt get your location. Pick manually',
             duration: 2500
           });
           toast.present();
@@ -69,22 +71,36 @@ export class AddPlacePage {
       );
   }
 
-  onTakePhot(){
-    const options: CameraOptions = {
-      quality: 100,
-      // destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      correctOrientation: true
-    }
+  onTakePhoto(){
+    // const options: CameraOptions = {
+    //   quality: 100,
+    //   // destinationType: this.camera.DestinationType.DATA_URL,
+    //   encodingType: this.camera.EncodingType.JPEG,
+    //   mediaType: this.camera.MediaType.PICTURE,
+    //   correctOrientation: true
+    // }
     
-    this.camera.getPicture(options).then((imageData) => {
-     // imageData is either a base64 encoded string or a file URI
-     // If it's base64:
-     console.log(imageData);
-     let base64Image = 'data:image/jpeg;base64,' + imageData;
-    }, (err) => {
-      console.log(err);
-    });
+    this.camera.getPicture({
+      encodingType: this.camera.EncodingType.JPEG,
+      correctOrientation: true
+    })
+      .then(
+        (imageData:string) => {
+          // imageData is either a base64 encoded string or a file URI
+          // If it's base64:
+        //   let base64Image = 'data:image/jpeg;base64,' + imageData;
+        //  }, (err) => {
+        //   // Handle error
+        //  });
+        this.imageUrl = imageData;
+        }
+      )
+      .catch(
+        err => {
+          console.log(err);
+        }
+      );
+ 
+ 
   }
 }
