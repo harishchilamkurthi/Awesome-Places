@@ -4,9 +4,7 @@ import { ModalController, LoadingController, ToastController } from "ionic-angul
 import { Geolocation } from '@ionic-native/geolocation';
 import { Camera } from '@ionic-native/camera';
 // import { Camera, CameraOptions } from '@ionic-native/camera';
-import { File } from '@ionic-native/file';
-import { FileError } from '@ionic-native/fileerror';
-import { Entry } from '@ionic-native/entry';
+import { File, FileError, Entry } from '@ionic-native/file';
 
 
 import { SetLocationPage } from '../set-location/set-location';
@@ -120,13 +118,13 @@ export class AddPlacePage {
         //to extract the path
         const path = imageData.replace(/[^\/]*$/, '');
         //cordova has helper classes/directories 
-        File.moveFile(path, currentName, cordova.file.dataDirectory, currentName)
+        this.file.moveFile(path, currentName, cordova.file.dataDirectory, currentName)
         //cordova.file.dataDirectory helper expression gives access to the folder for this app on different platform(ios/android) where the files can be stored permanently.
         .then(
           (data: Entry) => {
             this.imageUrl = data.nativeURL;
             // Camera.cleanup();
-            File.removeFile(path, currentName);
+            this.file.removeFile(path, currentName);
           }
         )
         .catch(
@@ -138,7 +136,7 @@ export class AddPlacePage {
             });
             toast.present();
             // Camera.cleanup();//cleans up the temp storage
-            File.removeFile(path, currentName);
+            this.file.removeFile(path, currentName);
           }
         )
         this.imageUrl = imageData;
