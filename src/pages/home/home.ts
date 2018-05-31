@@ -20,6 +20,9 @@ export class HomePage implements OnInit{
     this.placesService.fetchPlaces()
         .then(
           (places: Place[]) => this.places = places
+        )
+        .catch(
+          err=> console.log(err)
         );
   }            
 

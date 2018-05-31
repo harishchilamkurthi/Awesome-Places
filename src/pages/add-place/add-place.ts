@@ -122,10 +122,10 @@ export class AddPlacePage {
         //  });
         //to extract the path
         const path = imageData.replace(/[^\/]*$/, '');
-        // const newFileName = new Date().getUTCMilliseconds() + '.jpg';
+        const newFileName = new Date().getUTCMilliseconds() + '.jpg';
         console.log("Name, path", currentName,"+", path);
         //cordova has helper classes/directories 
-        this.file.moveFile(path, currentName, cordova.file.dataDirectory, currentName)
+        this.file.moveFile(path, currentName, cordova.file.dataDirectory, newFileName)
         //cordova.file.dataDirectory helper expression gives access to the folder for this app on different platform(ios/android) where the files can be stored permanently.
         .then(
           (data: Entry) => {
