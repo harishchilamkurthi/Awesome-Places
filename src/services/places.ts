@@ -1,6 +1,6 @@
 import { Place } from "../models/place";
 
-export class PlacesServices{
+export class PlacesService{
   // we do have the same places in models, so we need to import them here.
   private places: Place[] = [];
 
