@@ -13,11 +13,12 @@ export class HomePage {
   places: Place[] = [];
 
   constructor(public navCtrl: NavController,
-              private placeService: PlacesService) {
+              private placesService: PlacesService) {
     
   }
 
   ionViewWillEnter(){
+    this.places = this.placesService.loadPlaces();
 
   }
 }
