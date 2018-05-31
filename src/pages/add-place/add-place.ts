@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalController, LoadingController, ToastController } from "ionic-angular";
 import { Geolocation } from '@ionic-native/geolocation';
-// import { Camera } from '@ionic-native/camera';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
+// import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File, FileError, Entry } from '@ionic-native/file';
 
 
@@ -93,18 +93,18 @@ export class AddPlacePage {
   }
 
   onTakePhoto(){
-    const options: CameraOptions = {
-      quality: 100,
-    //   // destinationType: this.camera.DestinationType.DATA_URL,
-    //   encodingType: this.camera.EncodingType.JPEG,
+    // const options: CameraOptions = {
+    //   quality: 100,
+    // //   // destinationType: this.camera.DestinationType.DATA_URL,
+    // //   encodingType: this.camera.EncodingType.JPEG,
+    // //   mediaType: this.camera.MediaType.PICTURE,
+    //   destinationType: this.camera.DestinationType.FILE_URI,
+    //   // encodingType: this.camera.EncodingType.JPEG,
     //   mediaType: this.camera.MediaType.PICTURE,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      // encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      sourceType: this.camera.PictureSourceType.CAMERA,
-      allowEdit: true,
-      // correctOrientation: true
-    }
+    //   sourceType: this.camera.PictureSourceType.CAMERA,
+    //   allowEdit: true,
+    //   // correctOrientation: true
+    // }
     
     this.camera.getPicture({
       encodingType: this.camera.EncodingType.JPEG,
@@ -130,7 +130,7 @@ export class AddPlacePage {
         .then(
           (data: Entry) => {
             this.imageUrl = data.nativeURL;
-            // Camera.cleanup();
+            // Camera.cleanup(); //works only with iOS
             this.file.removeFile(path, currentName);
           }
         )
@@ -146,7 +146,7 @@ export class AddPlacePage {
             this.file.removeFile(path, currentName);
           }
         )
-        const base64Image = 'data:image/jpeg;base64,' + imageData;
+        // const base64Image = 'data:image/jpeg;base64,' + imageData;
 
         this.imageUrl = imageData;
         }
