@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalController, LoadingController, ToastController } from "ionic-angular";
 import { Geolocation } from '@ionic-native/geolocation';
-import { Camera } from '@ionic-native/camera';
-// import { Camera, CameraOptions } from '@ionic-native/camera';
+// import { Camera } from '@ionic-native/camera';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File, FileError, Entry } from '@ionic-native/file';
 
 
@@ -93,13 +93,18 @@ export class AddPlacePage {
   }
 
   onTakePhoto(){
-    // const options: CameraOptions = {
-    //   quality: 100,
+    const options: CameraOptions = {
+      quality: 100,
     //   // destinationType: this.camera.DestinationType.DATA_URL,
     //   encodingType: this.camera.EncodingType.JPEG,
     //   mediaType: this.camera.MediaType.PICTURE,
-    //   correctOrientation: true
-    // }
+      destinationType: this.camera.DestinationType.FILE_URI,
+      // encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.CAMERA,
+      allowEdit: true,
+      // correctOrientation: true
+    }
     
     this.camera.getPicture({
       encodingType: this.camera.EncodingType.JPEG,
@@ -117,6 +122,8 @@ export class AddPlacePage {
         //  });
         //to extract the path
         const path = imageData.replace(/[^\/]*$/, '');
+        // const newFileName = new Date().getUTCMilliseconds() + '.jpg';
+        console.log("Name, path", currentName,"+", path);
         //cordova has helper classes/directories 
         this.file.moveFile(path, currentName, cordova.file.dataDirectory, currentName)
         //cordova.file.dataDirectory helper expression gives access to the folder for this app on different platform(ios/android) where the files can be stored permanently.
@@ -139,6 +146,8 @@ export class AddPlacePage {
             this.file.removeFile(path, currentName);
           }
         )
+        const base64Image = 'data:image/jpeg;base64,' + imageData;
+
         this.imageUrl = imageData;
         }
       )
