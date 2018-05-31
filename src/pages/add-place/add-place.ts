@@ -23,7 +23,7 @@ export class AddPlacePage {
     lat: 40.7624324,
     lng: -73.9759827
   };
-  locationIsSet = true;
+  locationIsSet = false;
   imageUrl='';
 
   constructor(private modalCtrl: ModalController, 
@@ -123,15 +123,15 @@ export class AddPlacePage {
         //to extract the path
         const path = imageData.replace(/[^\/]*$/, '');
         const newFileName = new Date().getUTCMilliseconds() + '.jpg';
-        console.log("Name, path", currentName,"+", path);
+        // console.log("Name, path", currentName,"+", path);
         //cordova has helper classes/directories 
         this.file.moveFile(path, currentName, cordova.file.dataDirectory, newFileName)
         //cordova.file.dataDirectory helper expression gives access to the folder for this app on different platform(ios/android) where the files can be stored permanently.
         .then(
           (data: Entry) => {
             this.imageUrl = data.nativeURL;
-            // Camera.cleanup(); //works only with iOS
-            this.file.removeFile(path, currentName);
+            this.camera.cleanup(); //works only with iOS
+            this.file.removeFile(path, currentName);//
           }
         )
         .catch(
@@ -142,8 +142,8 @@ export class AddPlacePage {
               duration: 2500
             });
             toast.present();
-            // Camera.cleanup();//cleans up the temp storage
-            this.file.removeFile(path, currentName);
+            this.camera.cleanup();//cleans up the temp storage
+            this.file.removeFile(path, currentName);//
           }
         )
         // const base64Image = 'data:image/jpeg;base64,' + imageData;
