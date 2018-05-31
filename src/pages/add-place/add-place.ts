@@ -36,11 +36,13 @@ export class AddPlacePage {
       form.value.description,
       this.location,
       this.imageUrl);
+
       form.reset();
       this.location = {
         lat: 40.7624324,
         lng: -73.9759827
       };
+      
       this.imageUrl = '';
       this.locationIsSet = false;
   }
@@ -99,7 +101,7 @@ export class AddPlacePage {
       correctOrientation: true
     })
       .then(
-        (imageData:string) => {
+        (imageData:any) => {
           // imageData is either a base64 encoded string or a file URI
           // If it's base64:
         //   let base64Image = 'data:image/jpeg;base64,' + imageData;
