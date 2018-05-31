@@ -4,7 +4,8 @@ import {Location } from "../models/location";
 
 import { Storage } from '@ionic/storage';
 
-@Injectable
+@Injectable()
+
 export class PlacesService{
   // we do have the same places in models, so we need to import them here.
   private places: Place[] = [];
