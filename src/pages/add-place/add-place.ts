@@ -153,12 +153,15 @@ export class AddPlacePage {
       )
       .catch(
         err => {
-          const toast = this.toastCtrl.create({
-            message: 'Couldnt take the image. Please try again',
-            duration: 2500
-          });
+            const toast = this.toastCtrl.create({
+              message: 'Couldnt take the image. Please try again',
+              duration: 2500
+            
+            });
+          
           toast.present();
+          
         }
-      );
+      );  
   }
 }
